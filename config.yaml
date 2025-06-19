@@ -1,0 +1,178 @@
+# ========================================================================
+# Schwab ELT ETL Pipeline Configuration
+# ========================================================================
+# This file contains all non-secret configuration for the Schwab API project.
+# Secrets (credentials, account numbers, etc.) remain in .env file.
+#
+# Configuration is organized by service/component for better maintainability.
+# ========================================================================
+
+# --------------------------------------------------------
+# APPLICATION CONFIGURATION
+# --------------------------------------------------------
+application:
+  name: "schwab-elt-etl-pipeline"
+  timezone: "US/Pacific"
+  
+  # API Configuration - Schwab defines two APIs, one for data and one for trading
+  # If you configured only a single API, set both names to the same value
+  api:
+    data_name: "MAIN_DATA"
+    trade_name: "MAIN_TRADE"
+
+# --------------------------------------------------------
+# TOKENS MANAGER SERVICE
+# --------------------------------------------------------
+tokens:
+  refresh_threshold: 60  # seconds
+
+# --------------------------------------------------------
+# SCHWAB API CONFIGURATION
+# --------------------------------------------------------
+schwab_api:
+  # Token refresh retry configuration
+  max_retries: 30
+  initial_retry_delay: 1  # seconds
+  http_timeout: 10  # seconds
+
+# --------------------------------------------------------
+# EMAIL NOTIFICATION CONFIGURATION
+# --------------------------------------------------------
+email:
+  enabled: true
+
+# --------------------------------------------------------
+# DATABASE CONFIGURATION
+# --------------------------------------------------------
+database:
+  port: 1433
+  database_name: "OPT"
+  driver: "ODBC Driver 17 for SQL Server"
+  
+  # Market hours configuration
+  market_hours:
+    schema: "OPT.SCHWAB"
+    table: "MARKET_HOURS"
+
+# --------------------------------------------------------
+# REDIS CONFIGURATION
+# --------------------------------------------------------
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  ttl: 600  # seconds
+
+# --------------------------------------------------------
+# SCHWAB STREAM CONFIGURATION
+# --------------------------------------------------------
+stream:
+  # Data staleness detection
+  no_data_threshold: 30  # seconds
+  redis_freshness: 60  # seconds
+  parquet_freshness: 120  # seconds
+  
+  # Price drift monitoring
+  adjust_threshold: 30  # points
+  strike_range: 100  # points
+  strike_step: 5  # points
+  
+  # Connection management
+  backoff_seconds: 10  # seconds
+  poll_interval: 30  # seconds
+  
+  # Timing configuration
+  market_start_time: "06:30"
+  market_end_time: "13:00"
+  force_kill_time: "13:00:10"
+  
+  # Parquet configuration
+  parquet_dir: "./parquet"
+
+# --------------------------------------------------------
+# STREAM CONTROLLER CONFIGURATION
+# --------------------------------------------------------
+stream_controller:
+  # Service management
+  stream_service_name: "schwab-stream.service"
+  monitor_service_name: "schwab-stream-monitor.service"
+  
+  # Market schedule configuration
+  market_schedule_days_ahead: 30
+  schedule_reload_retry_hours: 1
+  
+  # Service monitoring configuration
+  service_check_interval: 60  # seconds
+  error_sleep_interval: 60  # seconds
+  next_day_check_time: "00:01"
+  
+  # Service management timeouts
+  systemctl_timeout: 30  # seconds
+  service_status_timeout: 10  # seconds
+
+# --------------------------------------------------------
+# BALANCE SERVICE CONFIGURATION
+# --------------------------------------------------------
+balance_service:
+  # Account balance monitoring service settings
+  check_times: ["06:00", "10:00", "14:00", "14:45", "18:00"]
+  check_interval: 10  # seconds
+  cooldown: 60  # seconds
+
+# --------------------------------------------------------
+# MARKET HOURS SERVICE CONFIGURATION
+# --------------------------------------------------------
+market_hours_service:
+  # Market hours monitoring service settings
+  check_times: ["06:28", "07:30", "02:00"]
+  check_interval: 60  # seconds
+
+# --------------------------------------------------------
+# OHLC SERVICE CONFIGURATION
+# --------------------------------------------------------
+ohlc_service:
+  # OHLC data collection service settings - collects daily and minute data
+  api_name: "MAIN_DATA"
+  symbols: ["$SPX", "$VIX"]
+  weekday_times: ["06:15", "13:15"]
+  saturday_times: ["06:15"]
+  check_interval: 60  # seconds
+  stored_procedure: "PYTHON.SP_PY_PROCESS_OHLC"
+
+# --------------------------------------------------------
+# TRANSACTIONS SERVICE CONFIGURATION
+# --------------------------------------------------------
+transactions_service:
+  # Transaction processing service settings
+  api_name: "MAIN_TRADE"
+  market_start_hour: 6
+  market_start_minute: 30
+  market_end_hour: 13
+  market_end_minute: 0
+  active_interval: 10  # seconds during market hours
+  inactive_interval: 60  # seconds outside market hours
+  stored_procedure: "OPT.PYTHON.SP_PY_PARSE_TRANSACTIONS"
+  no_orders_log_interval: 60  # seconds
+
+# --------------------------------------------------------
+# CHAINS SERVICE CONFIGURATION
+# --------------------------------------------------------
+chains_service:
+  # Option chains data collection service settings
+  api_name: "MAIN_DATA"
+  symbol: "$SPX"
+  table: "CHAINS.dbo.SPX_CHAIN"
+  strike_count: 200
+  session_padding_seconds: 30
+  
+  # DTE (Days to Expiration) configuration for different intervals
+  intervals:
+    "1min":
+      dte_from: 0
+      dte_to: 0
+    "5min":
+      dte_from: 0
+      dte_to: 7
+    "30min":
+      dte_from: 8
+      dte_to: 30

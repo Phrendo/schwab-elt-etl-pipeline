@@ -1,0 +1,10 @@
+httpx==0.28.1
+python-dotenv==1.1.0
+SQLAlchemy==2.0.41
+pyodbc==5.2.0
+websocket==0.2.1
+tzdata==2025.2
+pytz==2025.2
+redis==6.2.0
+numpy==2.3.0
+pandas==2.3.0
