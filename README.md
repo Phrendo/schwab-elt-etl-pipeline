@@ -66,57 +66,7 @@ The author is not responsible for any financial losses, performance outcomes, or
 
 </details>
 
-
-
-```mermaid
-
-flowchart LR
-    classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
-    classDef serviceNode fill:#003BA6,stroke:#007a6c,color:#fff
-    classDef storageNode fill:#D82828,stroke:#0288d1,color:#000
-    classDef monitorNode fill:#7e57c2,stroke:#5e35b1,color:#fff
-    classDef scriptNode fill:#000,stroke:#0FAD25,color:#0FAD25
-    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite alternate;
-    classDef animate2 stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite;
-    
-
-    %% API
-    API[("fas:fa-server Schwab API")]
-    class API apiNode
-
-    %% SQL Server
-    SQL[("fas:fa-database SQL Server")]
-    class SQL storageNode
-
-    %% AUTHENTICATION
-    AUTH(["fas:fa-lock Authentication"])
-    class AUTH serviceNode
-
-    %% STREAM SERVICE
-    STREAM(["fas:fa-water Streaming Service"])
-    class STREAM serviceNode
-
-    %% STORAGE SYSTEMS
-    REDIS[("fas:fa-memory Redis Cache")]
-    PARQUET[("fas:fa-save Parquet")]
-    class REDIS,PARQUET storageNode
-
-    %% Live Trader
-    TRADER(["Live Trader"])
-    class TRADER scriptNode
-
-    %% PIPELINE CONNECTIONS
-    API e1@<--> AUTH e2@<--> SQL
-    API e3@ <--> STREAM e4@--> REDIS
-    SQL o--o STREAM
-    REDIS e6@--> TRADER
-    
-    STREAM e5@--> PARQUET
-    
-    class e1,e2,e3 animate
-    class e4,e5,e6 animate2
-
-```
+## Token Manager Pipeline
 ```mermaid
 flowchart LR
     classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
@@ -163,6 +113,55 @@ flowchart LR
     class e2 animate2
 
 ```
+## WebSocket Pipeline
+```mermaid
+flowchart LR
+    classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
+    classDef serviceNode fill:#003BA6,stroke:#007a6c,color:#fff
+    classDef storageNode fill:#D82828,stroke:#0288d1,color:#000
+    classDef monitorNode fill:#7e57c2,stroke:#5e35b1,color:#fff
+    classDef scriptNode fill:#000,stroke:#0FAD25,color:#0FAD25
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite alternate;
+    classDef animate2 stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite;
+    
+
+    %% API
+    API[("fas:fa-server Schwab API")]
+    class API apiNode
+
+    %% SQL Server
+    SQL[("fas:fa-database SQL Server")]
+    class SQL storageNode
+
+    %% AUTHENTICATION
+    AUTH(["fas:fa-lock Authentication"])
+    class AUTH serviceNode
+
+    %% STREAM SERVICE
+    STREAM(["fas:fa-water Streaming Service"])
+    class STREAM serviceNode
+
+    %% STORAGE SYSTEMS
+    REDIS[("fas:fa-memory Redis Cache")]
+    PARQUET[("fas:fa-save Parquet")]
+    class REDIS,PARQUET storageNode
+
+    %% Live Trader
+    TRADER(["Live Trader"])
+    class TRADER scriptNode
+
+    %% PIPELINE CONNECTIONS
+    API e1@<--> AUTH e2@<--> SQL
+    API e3@ <--> STREAM e4@--> REDIS
+    SQL o--o STREAM
+    REDIS e6@--> TRADER
+    
+    STREAM e5@--> PARQUET
+    
+    class e1,e2,e3 animate
+    class e4,e5,e6 animate2
+```
+
 
 ## 🚀 Quick Start
 

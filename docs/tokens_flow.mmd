@@ -1,0 +1,43 @@
+flowchart LR
+    classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
+    classDef serviceNode fill:#003BA6,stroke:#007a6c,color:#fff
+    classDef storageNode fill:#D82828,stroke:#0288d1,color:#000
+    classDef scriptNode fill:#000,stroke:#0FAD25,color:#0FAD25
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite alternate;
+    classDef animate2 stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 2s linear infinite;
+
+    %% Schwab API
+    API[("fas:fa-server Schwab API")]
+    class API apiNode
+
+    %% Token Manager
+    TOKEN(["fas:fa-key Token Manager"])
+    class TOKEN serviceNode
+
+    %% SQL Token Storage
+    TOKENSQL[("fas:fa-database Token Store (SQL)")]
+    class TOKENSQL storageNode
+
+    %% Downstream Services
+    STREAM(["Streaming Service"])
+    CHAINS(["Option Chains Service"])
+    TXNS(["Transactions Service"])
+    BAL(["Balance Service"])
+    HOURS(["Market Hours Service"])
+    class STREAM,CHAINS,TXNS,BAL,HOURS serviceNode
+
+    %% Flow Logic
+    API e1@<--> TOKEN
+    TOKEN e2@--> TOKENSQL
+
+    %% Services pull from SQL only
+    TOKENSQL --> STREAM
+    TOKENSQL --> CHAINS
+    TOKENSQL --> TXNS
+    TOKENSQL --> BAL
+    TOKENSQL --> HOURS
+
+
+    %% Animations
+    class e1 animate
+    class e2 animate2
