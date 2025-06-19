@@ -2,6 +2,9 @@
 
 A comprehensive data collection and processing pipeline for the Charles Schwab API, designed to capture real-time market data, option chains, transactions, and account information for analysis and trading operations. This is setup to use Microsoft SQL Server as the database. I run it directly on Ubuntu 22.04, be sure to setup the SQL Server agent, as you will need it for transforming the parquet data into Options ojects and subsequently into Veritcals.
 
+<details>
+<summary>🧬 <strong>Project Detail</strong></summary>
+
 - Authentication Service (tokens_service.py)
   - Handled independent of all other services
   - Access Token Every 30 minutes (set by Schwab)
@@ -41,6 +44,7 @@ A comprehensive data collection and processing pipeline for the Charles Schwab A
   - Market Hours Service - Use this for monitoring market hours
     - Updates market hours data in SQL
     - Provides foundation for other services' scheduling
+</details>
 
 <details>
 <summary>🔐 <strong>Security Notice</strong></summary>
@@ -162,6 +166,39 @@ flowchart LR
     class e4,e5,e6 animate2
 ```
 
+## Services Pipeline
+```mermaid
+flowchart LR
+    classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
+    classDef serviceNode fill:#003BA6,stroke:#007a6c,color:#fff
+    classDef storageNode fill:#D82828,stroke:#0288d1,color:#000
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 5s linear infinite;
+
+    %% Schwab API
+    API[("fas:fa-server Schwab API")]
+    class API apiNode
+
+    %% SQL Server
+    SQL[("fas:fa-database SQL Server")]
+    class SQL storageNode
+
+    %% Services (using your class + syntax style)
+    CHAINS(["Chains Service"])
+    OHLC(["OHLC Service"])
+    TXNS(["Transactions Service"])
+    HOURS(["Market Hours Service"])
+    BAL(["Balance Service"])
+    class CHAINS,OHLC,TXNS,HOURS,BAL serviceNode
+
+    %% Flow
+    API e1@--> CHAINS e2@--> SQL
+    API e3@--> OHLC e4@--> SQL
+    API e5@--> TXNS e6@--> SQL
+    API e7@--> HOURS e8@--> SQL
+    API e9@--> BAL e10@--> SQL
+
+    class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10 animate
+```
 
 ## 🚀 Quick Start
 
@@ -181,31 +218,6 @@ This system continuously collects and processes financial data from the Schwab A
 - **Transactions**: Account transaction monitoring and processing
 - **Account Data**: Balance and account information updates
 
-## 🏗️ Architecture Overview
-
-```mermaid
-graph TB
-    API[Schwab API] --> AUTH[Authentication & Token Mgmt]
-    AUTH --> DB[(Database SQL Server)]
-
-    API --> SERVICES[Data Services]
-    SERVICES --> STREAM[Streaming]
-    SERVICES --> CHAINS[Chains]
-    SERVICES --> OHLC[OHLC]
-    SERVICES --> TRANS[Transactions]
-
-    TOOLS[Tools/Modules] --> DBMOD[DB Handler]
-    TOOLS --> CLIENT[API Client]
-    TOOLS --> CONFIG[Config Mgmt]
-    TOOLS --> DECORATORS[Decorators]
-
-    NOTIFY[Notifications] --> EMAIL[Email]
-    NOTIFY --> LOGGING[Logging]
-
-    SERVICES --> DB
-    TOOLS --> DB
-    NOTIFY --> EMAIL
-```
 
 > **⚠️ Important**: This pipeline currently has Pacific Time Zone hardcoded in `config.yaml`. All market hours and scheduling are based on US/Pacific timezone.
 
@@ -233,39 +245,12 @@ graph TB
 - **[Running the Pipeline](docs/operations.md)** - Starting, monitoring, and troubleshooting
 - **[Systemd Integration](docs/systemd.md)** - Service management and scheduling
 
-## 🔧 Key Features
-
-- **OAuth2 Authentication** with automatic token refresh
-- **Market Hours Awareness** for intelligent scheduling
-- **Robust Error Handling** with email notifications
-- **Database Integration** with connection pooling
-- **Configurable Scheduling** via environment variables
-- **Real-time Streaming** with automatic reconnection
-- **Comprehensive Logging** for monitoring and debugging
-
 ## 🛠️ Prerequisites
 
 - Python 3.8+
 - SQL Server database
-- Schwab API credentials (OAuth2 app registration)
+- Schwab API credentials & Account (OAuth2 app registration)
 - Gmail account for notifications (optional)
-
-## 📊 Data Collected
-
-The pipeline captures:
-- **SPX Option Chains** (1-min, 5-min, 30-min intervals)
-- **Real-time Streaming** (options and underlying ticks)
-- **OHLC Price Data** (minute and daily)
-- **Account Transactions** (orders and executions)
-- **Account Balances** and information
-- **Market Hours** and trading sessions
-
-## 🔒 Security
-
-- Credentials stored in environment variables
-- Database connection encryption
-- Token-based API authentication
-- No hardcoded secrets in code
 
 ## 📋 TODOs
 
@@ -276,6 +261,3 @@ The pipeline captures:
 
 This project is for educational and personal use. Please ensure compliance with Schwab API terms of service.
 
----
-
-For detailed setup instructions, see the [Setup Guide](docs/setup.md).

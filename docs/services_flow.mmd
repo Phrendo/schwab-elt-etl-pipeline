@@ -1,0 +1,30 @@
+flowchart LR
+    classDef apiNode fill:#ff9800,stroke:#f57c00,color:#000
+    classDef serviceNode fill:#003BA6,stroke:#007a6c,color:#fff
+    classDef storageNode fill:#D82828,stroke:#0288d1,color:#000
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 50,animation: dash 5s linear infinite;
+
+    %% Schwab API
+    API[("fas:fa-server Schwab API")]
+    class API apiNode
+
+    %% SQL Server
+    SQL[("fas:fa-database SQL Server")]
+    class SQL storageNode
+
+    %% Services (using your class + syntax style)
+    CHAINS(["Chains Service"])
+    OHLC(["OHLC Service"])
+    TXNS(["Transactions Service"])
+    HOURS(["Market Hours Service"])
+    BAL(["Balance Service"])
+    class CHAINS,OHLC,TXNS,HOURS,BAL serviceNode
+
+    %% Flow
+    API e1@--> CHAINS e2@--> SQL
+    API e3@--> OHLC e4@--> SQL
+    API e5@--> TXNS e6@--> SQL
+    API e7@--> HOURS e8@--> SQL
+    API e9@--> BAL e10@--> SQL
+
+    class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10 animate
