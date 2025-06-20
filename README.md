@@ -2,7 +2,7 @@
 
 A comprehensive data collection and processing pipeline for the Charles Schwab API, designed to capture real-time market data, option chains, transactions, and account information for analysis and trading operations. This is setup to use Microsoft SQL Server as the database. I run it directly on Ubuntu 22.04, be sure to setup the SQL Server agent, as you will need it for transforming the parquet data into Options ojects and subsequently into Veritcals.
 
-> **Note**: This project does not use any imported schwab helper libraries at all. All connectiviy code is original and contained within this project.
+> **Note**: This project does not use any imported schwab helper libraries at all. All connectiviy code is original and transparently contained within this project!
 
 <details>
 <summary>🧬 <strong>Project Detail</strong></summary>
