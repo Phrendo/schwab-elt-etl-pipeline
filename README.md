@@ -4,6 +4,9 @@ A comprehensive data collection and processing pipeline for the Charles Schwab A
 
 > **Note**: This project does not use any imported schwab helper libraries at all. All connectiviy code is original and transparently contained within this project!
 
+**[For some specific SQL ETL work examples](docs/sql_server.md)**
+
+
 <details>
 <summary>🧬 <strong>Project Detail</strong></summary>
 
