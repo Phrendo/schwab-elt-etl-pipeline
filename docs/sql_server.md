@@ -107,7 +107,7 @@ BEGIN
 	END CATCH
 
 ```
-> NOTE: Removing try/catch, logging for readability going forward.
+> NOTE: Removing try/catch, logging and vertically compressed scripting for readability going forward.
 
 ### Transforming into market objects (options, symbols) (Silver)
 This is an example procedure that ingests from the parquet staging table. The websocket side of this (the collector) has a data cleansing layer. The data at this point is mostly pristine. This section parses data into Option Objects (OPT) and Option Time Series OPTM, in a perfect 1NF-3NF format. The only repeating data is the OPT_ID.
