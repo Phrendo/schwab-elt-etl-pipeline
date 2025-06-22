@@ -10,7 +10,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [HISTORIC].[DAY](
+CREATE TABLE [HISTORIC].[DAY]
+(
 	[O] [decimal](9, 2) NULL,
 	[H] [decimal](9, 2) NULL,
 	[L] [decimal](9, 2) NULL,
@@ -24,7 +25,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [HISTORIC].[MINUTE](
+CREATE TABLE [HISTORIC].[MINUTE]
+(
 	[O] [decimal](9, 2) NULL,
 	[H] [decimal](9, 2) NULL,
 	[L] [decimal](9, 2) NULL,
@@ -39,7 +41,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[DAY](
+CREATE TABLE [PYTHON].[DAY]
+(
 	[open] [float] NULL,
 	[high] [float] NULL,
 	[low] [float] NULL,
@@ -56,7 +59,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[EXECUTIONLEGS](
+CREATE TABLE [PYTHON].[EXECUTIONLEGS]
+(
 	[activityId] [int] NOT NULL,
 	[legId] [nvarchar](50) NOT NULL,
 	[quantity] [float] NULL,
@@ -64,7 +68,7 @@ CREATE TABLE [PYTHON].[EXECUTIONLEGS](
 	[price] [float] NULL,
 	[time] [datetimeoffset](7) NULL,
 	[instrumentId] [nvarchar](50) NULL,
- CONSTRAINT [PK_ExecutionLegs] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_ExecutionLegs] PRIMARY KEY CLUSTERED 
 (
 	[activityId] ASC,
 	[legId] ASC
@@ -76,7 +80,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[MINUTE](
+CREATE TABLE [PYTHON].[MINUTE]
+(
 	[open] [float] NULL,
 	[high] [float] NULL,
 	[low] [float] NULL,
@@ -92,14 +97,15 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[ORDERACTIVITIES](
+CREATE TABLE [PYTHON].[ORDERACTIVITIES]
+(
 	[activityId] [int] IDENTITY(1,1) NOT NULL,
 	[orderId] [nvarchar](50) NULL,
 	[activityType] [nvarchar](50) NULL,
 	[executionType] [nvarchar](50) NULL,
 	[quantity] [float] NULL,
 	[orderRemainingQuantity] [float] NULL,
-PRIMARY KEY CLUSTERED 
+	PRIMARY KEY CLUSTERED 
 (
 	[activityId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -110,7 +116,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[ORDERLEGS](
+CREATE TABLE [PYTHON].[ORDERLEGS]
+(
 	[legId] [nvarchar](50) NULL,
 	[orderId] [nvarchar](50) NULL,
 	[orderLegType] [nvarchar](50) NULL,
@@ -132,7 +139,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[ORDERS](
+CREATE TABLE [PYTHON].[ORDERS]
+(
 	[orderId] [nvarchar](50) NOT NULL,
 	[session] [nvarchar](50) NULL,
 	[duration] [nvarchar](50) NULL,
@@ -154,7 +162,7 @@ CREATE TABLE [PYTHON].[ORDERS](
 	[tag] [nvarchar](50) NULL,
 	[accountNumber] [nvarchar](50) NULL,
 	[parentOrderId] [nvarchar](50) NULL,
- CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED 
 (
 	[orderId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -165,7 +173,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [PYTHON].[PYTHON_LOGS](
+CREATE TABLE [PYTHON].[PYTHON_LOGS]
+(
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[timestamp] [datetime] NOT NULL,
 	[level] [nvarchar](10) NOT NULL,
@@ -175,7 +184,7 @@ CREATE TABLE [PYTHON].[PYTHON_LOGS](
 	[line] [int] NULL,
 	[app_name] [nvarchar](50) NOT NULL,
 	[error] [nvarchar](max) NULL,
-PRIMARY KEY CLUSTERED 
+	PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -186,7 +195,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [SCHWAB].[API](
+CREATE TABLE [SCHWAB].[API]
+(
 	[Name] [varchar](10) NOT NULL,
 	[client_id] [varchar](32) NOT NULL,
 	[client_secret] [varchar](16) NOT NULL,
@@ -202,7 +212,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [SCHWAB].[BALANCES](
+CREATE TABLE [SCHWAB].[BALANCES]
+(
 	[ApiCallTime] [datetime2](0) NOT NULL,
 	[accountId] [int] NOT NULL,
 	[roundTrips] [smallint] NULL,
@@ -211,7 +222,7 @@ CREATE TABLE [SCHWAB].[BALANCES](
 	[buyingPower] [decimal](20, 2) NULL,
 	[cashBalance] [decimal](20, 2) NULL,
 	[liquidationValue] [decimal](20, 2) NULL,
- CONSTRAINT [PK_Balances] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_Balances] PRIMARY KEY CLUSTERED 
 (
 	[ApiCallTime] ASC,
 	[accountId] ASC
@@ -223,7 +234,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [SCHWAB].[HASH](
+CREATE TABLE [SCHWAB].[HASH]
+(
 	[Name] [varchar](10) NOT NULL,
 	[account_number] [varchar](8) NOT NULL,
 	[account_hash] [varchar](64) NOT NULL,
@@ -235,7 +247,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [SCHWAB].[JSON_TRANSACTIONS](
+CREATE TABLE [SCHWAB].[JSON_TRANSACTIONS]
+(
 	[ReceivedAt] [datetime2](0) NULL,
 	[JsonData] [nvarchar](max) NULL,
 	[OrderID] [bigint] NULL,
@@ -248,7 +261,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [SCHWAB].[MARKET_HOURS](
+CREATE TABLE [SCHWAB].[MARKET_HOURS]
+(
 	[ProcTime] [datetime2](0) NOT NULL,
 	[market_date] [date] NOT NULL,
 	[market_type] [varchar](50) NOT NULL,
@@ -276,28 +290,31 @@ BEGIN
 	SELECT orderId, AQ, SUM(P) P, MAX(SS) SS, MAX(LS) LS, PutCall, PositionEffect
 	INTO #Subs
 	FROM (
-		SELECT A.orderId, 
-			SUM(C.quantity) AQ, 
-			LEFT(instruction,3) instruction, 
-			PositionEffect, 
-			IIF(LEFT(instruction,3)='BUY',NULL, Symbol) SS, 
-			IIF(LEFT(instruction,3)='BUY',Symbol, NULL) LS, 
+		SELECT A.orderId,
+			SUM(C.quantity) AQ,
+			LEFT(instruction,3) instruction,
+			PositionEffect,
+			IIF(LEFT(instruction,3)='BUY',NULL, Symbol) SS,
+			IIF(LEFT(instruction,3)='BUY',Symbol, NULL) LS,
 			PutCall,
-			AVG(IIF(LEFT(instruction,3)='BUY',-C.price,C.price)) P			
+			AVG(IIF(LEFT(instruction,3)='BUY',-C.price,C.price)) P
 		FROM OPT.PYTHON.OrderActivities A
-		LEFT JOIN OPT.PYTHON.OrderLegs B ON B.orderId=A.orderId
-		LEFT JOIN OPT.PYTHON.ExecutionLegs C ON C.activityId=A.activityId AND C.legId=B.legId
+			LEFT JOIN OPT.PYTHON.OrderLegs B ON B.orderId=A.orderId
+			LEFT JOIN OPT.PYTHON.ExecutionLegs C ON C.activityId=A.activityId AND C.legId=B.legId
 		GROUP BY A.orderId, LEFT(instruction,3), PositionEffect, Symbol, PutCall
-	) A GROUP BY orderId, AQ, PutCall, PositionEffect
+	) A
+	GROUP BY orderId, AQ, PutCall, PositionEffect
 
-	
-	DELETE FROM OPT.SCHWAB.TRANSACTIONS WHERE orderId IN (SELECT orderId FROM OPT.PYTHON.ORDERS GROUP BY orderId)
-	
+
+	DELETE FROM OPT.SCHWAB.TRANSACTIONS WHERE orderId IN (SELECT orderId
+	FROM OPT.PYTHON.ORDERS
+	GROUP BY orderId)
+
 	INSERT INTO OPT.SCHWAB.TRANSACTIONS
 	SELECT A.orderType, A.complexOrderStrategyType V, A.orderId, A.status, A.enteredTime, A.closeTime,
 		A.accountNumber, B.AQ, B.P, B.SS, B.LS, B.putCall, B.PositionEffect
 	FROM OPT.PYTHON.ORDERS A
-	LEFT JOIN #Subs B ON B.orderId=A.orderId
+		LEFT JOIN #Subs B ON B.orderId=A.orderId
 	WHERE orderStrategyType <> 'OCO' aND Status IN ('FILLED', 'AWAITING_STOP_CONDITION')
 
 	TRUNCATE TABLE OPT.PYTHON.ORDERS
@@ -308,8 +325,10 @@ BEGIN
 	EXEC OPT.LIVE.HANDLE_CST
 
 
-	SELECT * FROM OPT.PYTHON.ORDERS WHERE orderID = 1003548286574
-	
+	SELECT *
+	FROM OPT.PYTHON.ORDERS
+	WHERE orderID = 1003548286574
+
 END
 
 GO
@@ -321,8 +340,8 @@ GO
 
 -- =============================================
 -- Author:		BW
--- Create date: 02/19/2025
--- Description:	This process the OHLC data from the staging tables.
+-- Updated date: 02/19/2025
+-- Description:	This processes the OHLC data from the staging tables.
 --		This is used by SCHWAB_DATA_COLLECTOR - DAILY OHLC
 -- =============================================
 CREATE PROCEDURE [PYTHON].[SP_PY_PROCESS_OHLC]
@@ -333,16 +352,18 @@ BEGIN
 
 	---======== GATHER UNIQUE VALUES FOR DAY
 	DROP TABLE IF EXISTS #T_DAY
-	SELECT S.[open] O, S.[high] H, S.[low] L, S.[close] C, [date] Dt, Symbol Sym INTO #T_DAY
+	SELECT S.[open] O, S.[high] H, S.[low] L, S.[close] C, [date] Dt, Symbol Sym
+	INTO #T_DAY
 	FROM OPT.PYTHON.DAY S
 	WHERE S.freq = 'DAY'
 	GROUP BY S.[open], S.[high], S.[low], S.[close], [date], Symbol
 
 	---======== INSERT WHERE NOT EXISTS
-	INSERT INTO OPT.HISTORIC.DAY (O,H,L,C,Dt,Sym)
+	INSERT INTO OPT.HISTORIC.DAY
+		(O,H,L,C,Dt,Sym)
 	SELECT S.O, S.H, S.L, S.C, S.Dt, S.Sym
 	FROM #T_DAY S
-	LEFT JOIN OPT.HISTORIC.DAY T ON T.dt=S.Dt AND T.Sym=S.Sym
+		LEFT JOIN OPT.HISTORIC.DAY T ON T.dt=S.Dt AND T.Sym=S.Sym
 	WHERE T.dt IS NULL
 
 	---======== TRUNCATE THE STAGING TABLE
@@ -350,16 +371,18 @@ BEGIN
 
 	---======== GATHER UNIQUE VALUES FOR MINUTE
 	DROP TABLE IF EXISTS #T_MIN
-	SELECT S.[open] O, S.[high] H, S.[low] L, S.[close] C, volume V, datetime Dt, Symbol Sym INTO #T_MIN
+	SELECT S.[open] O, S.[high] H, S.[low] L, S.[close] C, volume V, datetime Dt, Symbol Sym
+	INTO #T_MIN
 	FROM OPT.PYTHON.MINUTE S
 	WHERE S.freq = 'MINUTE'
 	GROUP BY S.[open], S.[high], S.[low], S.[close], volume, datetime, Symbol
 
 	---======== INSERT WHERE NOT EXISTS
-	INSERT INTO OPT.HISTORIC.MINUTE (O,H,L,C,V,Dt,Sym)
+	INSERT INTO OPT.HISTORIC.MINUTE
+		(O,H,L,C,V,Dt,Sym)
 	SELECT S.O, S.H, S.L, S.C, S.V, S.Dt, S.Sym
 	FROM #T_MIN S
-	LEFT JOIN OPT.HISTORIC.MINUTE T ON T.dt=S.Dt AND T.Sym=S.Sym
+		LEFT JOIN OPT.HISTORIC.MINUTE T ON T.dt=S.Dt AND T.Sym=S.Sym
 	WHERE T.dt IS NULL
 
 	---======== TRUNCATE THE STAGING TABLE
