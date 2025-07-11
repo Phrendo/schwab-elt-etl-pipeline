@@ -8,7 +8,7 @@ A comprehensive data collection and processing pipeline for the Charles Schwab A
 
 
 <details>
-<summary>🧬 <strong>Project Detail</strong></summary>
+<summary> <strong>Project Detail</strong></summary>
 
 - Authentication Service (tokens_service.py)
   - Handled independent of all other services
@@ -52,7 +52,7 @@ A comprehensive data collection and processing pipeline for the Charles Schwab A
 </details>
 
 <details>
-<summary>🔐 <strong>Security Notice</strong></summary>
+<summary> <strong>Security Notice</strong></summary>
 
 This system is designed for private use only. It is your sole responsibility to secure your data collection environment. At a minimum:
 
@@ -67,7 +67,7 @@ This system is designed for private use only. It is your sole responsibility to 
 </details>
 
 <details>
-<summary>📉 <strong>Investment Disclaimer</strong></summary>
+<summary> <strong>Investment Disclaimer</strong></summary>
 
 This software is provided for educational and analytical purposes only. It is **not intended as financial advice or a trading recommendation**. Use of any data collected or strategies derived from this software is done solely at your own discretion and risk.
 
@@ -205,7 +205,7 @@ flowchart LR
     class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10 animate
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 1. **Setup Configuration**: Copy `.env.example` to `.env` and configure your credentials
 2. **Install Dependencies**: `pip install -r requirements.txt`
@@ -213,7 +213,7 @@ flowchart LR
 4. **Authenticate**: Manually run tokens_service.py to fetch and store OAuth2 tokens - it will prompt you to authenticate in your browser
 5. **Start Services**: Use systemd or run services manually for data collection
 
-## 📋 What This Pipeline Does
+##  What This Pipeline Does
 
 This system continuously collects and processes financial data from the Schwab API:
 
@@ -224,9 +224,9 @@ This system continuously collects and processes financial data from the Schwab A
 - **Account Data**: Balance and account information updates
 
 
-> **⚠️ Important**: This pipeline currently has Pacific Time Zone hardcoded in `config.yaml`. All market hours and scheduling are based on US/Pacific timezone.
+> ** Important**: This pipeline currently has Pacific Time Zone hardcoded in `config.yaml`. All market hours and scheduling are based on US/Pacific timezone.
 
-## 📁 Project Structure
+##  Project Structure
 
 - **[`tools/`](docs/tools.md)** - Core reusable modules (DB, API client, utilities)
 - **[`services/`](docs/services.md)** - Data collection services managed by systemd
@@ -234,7 +234,7 @@ This system continuously collects and processes financial data from the Schwab A
 - **[`docs/`](docs/)** - Detailed documentation for each component
 - **[`sql/`](docs/database.md)** - Database schema and stored procedures
 
-## 📖 Documentation
+##  Documentation
 
 ### Setup & Configuration
 - **[Setup Guide](docs/setup.md)** - Complete installation and configuration
@@ -250,19 +250,19 @@ This system continuously collects and processes financial data from the Schwab A
 - **[Running the Pipeline](docs/operations.md)** - Starting, monitoring, and troubleshooting
 - **[Systemd Integration](docs/systemd.md)** - Service management and scheduling
 
-## 🛠️ Prerequisites
+##  Prerequisites
 
 - Python 3.8+
 - SQL Server database
 - Schwab API credentials & Account (OAuth2 app registration)
 - Gmail account for notifications (optional)
 
-## 📋 TODOs
+##  TODOs
 
 - **Timezone Configuration**: Make timezone configurable instead of hardcoded Pacific Time in `config.yaml`
 - **Multi-Symbol Chains**: Duplicate option chains collection for additional symbols beyond SPX
 
-## 📝 License
+##  License
 
 This project is for educational and personal use. Please ensure compliance with Schwab API terms of service.
 
